@@ -9,11 +9,11 @@
 
       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          <li class="nav-item" v-bind:class="{ active: homeIsActive }">
+            <router-link class="nav-link" v-bind:to="'/'">Home</router-link>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
+          <li class="nav-item" v-bind:class="{ active: aboutIsActive }">
+            <router-link class="nav-link" v-bind:to="'about'">About</router-link>
           </li>
           <li class="nav-item">
             <a class="nav-link disabled" href="#">Disabled</a>
@@ -41,7 +41,26 @@
 
 <script>
 export default {
-  name: 'app'
+  name: 'app',
+  data () {
+    return {
+      aboutIsActive: false,
+      homeIsActive: true
+    }
+  },
+  watch: {
+    '$route': function(value) {
+      // lets watch for route changes on our
+      // main parent app component.
+      if(value.name === 'HelloWorld') {
+        this.homeIsActive = true;
+        this.aboutIsActive = false;
+      }else if (value.name === 'About'){
+        this.aboutIsActive = true;
+        this.homeIsActive = false;
+      }
+    }
+  }
 }
 </script>
 
