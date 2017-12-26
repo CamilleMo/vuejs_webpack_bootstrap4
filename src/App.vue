@@ -12,6 +12,9 @@
           <li class="nav-item" v-bind:class="{ active: homeIsActive }">
             <router-link class="nav-link" v-bind:to="'/'">Home</router-link>
           </li>
+          <li class="nav-item" v-bind:class="{ active: basicIsActive }">
+            <router-link class="nav-link" v-bind:to="'basic'">Basic</router-link>
+          </li>
           <li class="nav-item" v-bind:class="{ active: aboutIsActive }">
             <router-link class="nav-link" v-bind:to="'about'">About</router-link>
           </li>
@@ -45,7 +48,8 @@ export default {
   data () {
     return {
       aboutIsActive: false,
-      homeIsActive: true
+      homeIsActive: true,
+      basicIsActive: false
     }
   },
   watch: {
@@ -55,9 +59,15 @@ export default {
       if(value.name === 'HelloWorld') {
         this.homeIsActive = true;
         this.aboutIsActive = false;
-      }else if (value.name === 'About'){
+        this.basicIsActive = false;
+      } else if (value.name === 'About'){
         this.aboutIsActive = true;
         this.homeIsActive = false;
+        this.basicIsActive = false;
+      } else if (value.name === 'Basic'){
+        this.aboutIsActive = false;
+        this.homeIsActive = false;
+        this.basicIsActive = true;
       }
     }
   }
