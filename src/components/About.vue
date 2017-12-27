@@ -19,6 +19,11 @@
                     <button class="btn btn-primary" v-on:click="fetch_api">Fetch API</button>
                   </div>
                 </div>
+                  <div v-if="loading" class="text-center">
+                    <br>
+                    <i class="fa fa-spinner fa-spin fa-5x fa-fw"></i>
+                    <span class="sr-only">Loading...</span>
+                  </div>
                    <div v-if="remote">
                     <br>
                     The result :
@@ -59,12 +64,14 @@ export default {
     return {
       msg: 'This is the about page !',
       remote: false,
+      loading:false,
       todos: {
             }
     }
   },
   methods: {
   fetch_api: function(){
+    this.loading = true;
     var _this = this;
 
     fetch("http://jsonplaceholder.typicode.com/todos").then(function (response) {
@@ -78,9 +85,9 @@ export default {
                   for (i = 0; i < this.todos_raw.length; i++) {
                     _this.$set(this.todos, i, this.todos_raw[i]);
                   };
+                  this.loading = false;
+                  this.remote = true;
               });
-              
-              this.remote = true;
   }
 
   }
